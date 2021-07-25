@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, createContext } from "react";
+import "./App.css";
+import { Person } from "./components/Person";
+import { HairColor } from "./Enums";
+import { Todos } from "./components/Todos";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface AppContextInterface {
+  name: string;
+  age: number;
+  country: string;
 }
+
+const AppContext = createContext<AppContextInterface | null>(null);
+
+const App: FC = () => {
+  const name: string = "Aidan";
+  const age: number = 26;
+  const isMarried: boolean = false;
+
+  const getName = (name: string): number => {
+    if (name === "Aidan") {
+      return 26;
+    } else {
+      return 0;
+    }
+  };
+
+  const contextValue: AppContextInterface = {
+    name: "Aidan",
+    age: 26,
+    country: "United Kingdom",
+  };
+
+  return (
+    <AppContext.Provider value={contextValue}>
+      <Person
+        name="Aidan"
+        age={26}
+        email="aidan@gmail.com"
+        hairColor={HairColor.Blonde}
+      />
+      <Todos />
+    </AppContext.Provider>
+  );
+};
 
 export default App;
